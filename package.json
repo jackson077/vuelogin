@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^6.6.1",
+    "firebase": "^9.6.9",
     "vue": "^3.2.16",
     "vue-router": "^4.0.12"
   },
