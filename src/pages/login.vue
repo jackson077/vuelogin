@@ -4,7 +4,7 @@ import { useRouter } from "vue-router";
 import useAuth from "../composable/useAuth";
 import useError from "../composable/useError";
 
-const { isAuthenticated, login } = useAuth();
+const { isAuthenticated, login, signup } = useAuth();
 
 const username = ref("");
 const password = ref("");
@@ -13,9 +13,16 @@ const router = useRouter();
 
 const logginIn = async () => {
  await login(username.value, password.value);
-  if (isAuthenticated.value) {
+  goToHome();
+};
+const signingUp = async () =>  {
+  await signup(username.value, password.value);
+  goToHome();
+};
+const goToHome = () => {
+    if(isAuthenticated.value) {
     router.push("/");
-  } else {
+  }else {
     setError("Invalid username or password");
     start();
   }
@@ -50,13 +57,22 @@ const { ready, start } = useTimeout(3000, { controls: true });
           placeholder="Password"
           v-model="password"
         />
+        <div class="flex space-x-2">
         <button
           type="submit"
           @submit.prevent="logginIn"
-          class="py-2 text-indigo-200 bg-indigo-600 rounded-lg"
+          class="w-1/2 py-2 text-yellow-200 bg-yellow-600 rounded-lg"
         >
           Login
         </button>
+         <button
+          type="submit"
+          @click="signingUp"
+          class="w-1/2 py-2 text-green-200 bg-green-600 rounded-lg"
+        >
+          SignUp
+        </button>
+        </div>
       </form>
     </div>
     <div
